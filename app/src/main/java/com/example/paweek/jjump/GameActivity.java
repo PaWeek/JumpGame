@@ -35,6 +35,10 @@ public class GameActivity extends AppCompatActivity {
                     ((Button)view).setText("pause");
                 }
                 break;
+            case R.id.btnRestart:
+                game.restart();
+                ((Button)findViewById(R.id.btnPausePlay)).setText("play");
+                break;
         }
     }
 }

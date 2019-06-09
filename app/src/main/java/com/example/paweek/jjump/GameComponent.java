@@ -103,6 +103,14 @@ public class GameComponent extends View {
         play = true;
     }
 
+    public void restart() {
+        pauseGame();
+        points = 0;
+        txtPoints.setText(points.toString());
+        substaclePosition = 1;
+        jumpPosition = 0;
+    }
+
     class JumpThread implements Runnable {
         private Handler handler;
 
