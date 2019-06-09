@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBlack"
-    tools:context=".MainActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
 
-    <ImageView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/small_dino"/>
+        android:layout_height="match_parent"
+        android:background="@color/colorBlack"
+        tools:context=".MainActivity">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textSize="26dp"
-        android:background="@drawable/rounded_button"
-        android:textColor="@color/colorWhiteText"
-        android:fontFamily="casual"
-        android:text="PLAY" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/small_dino"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/rounded_button"
-        android:fontFamily="casual"
-        android:text="RANK"
-        android:textColor="@color/colorWhiteText"
-        android:textSize="26dp" />
+        <Button
+            android:id="@+id/btnMenuPlay"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textSize="26dp"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhiteText"
+            android:fontFamily="casual"
+            android:text="@string/play"
+            android:onClick="buttonClick"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="casual"
-        android:textSize="26dp"
-        android:background="@drawable/rounded_button"
-        android:textColor="@color/colorWhiteText"
-        android:text="ABOUT" />
+        <Button
+            android:id="@+id/btnMenuRank"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/rounded_button"
+            android:fontFamily="casual"
+            android:text="@string/rank"
+            android:textColor="@color/colorWhiteText"
+            android:textSize="26dp"
+            android:onClick="buttonClick" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnMenuHowPlay"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="60dp"
+            android:fontFamily="casual"
+            android:textSize="26dp"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhiteText"
+            android:text="@string/how_play"
+            android:onClick="buttonClick" />
+
+    </LinearLayout>
+
+</ScrollView>
+
