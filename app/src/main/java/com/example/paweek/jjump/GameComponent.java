@@ -26,7 +26,7 @@ public class GameComponent extends View {
         substaclePosition = 0;
         goDown = goUp = play = false;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.WHITE);
         jumpThread = new Thread(new JumpThread(new Handler()));
         substaclesThread = new Thread(new RunThread(new Handler()));
         jumpThread.start();
