@@ -27,7 +27,7 @@ public class ResultsRepository {
 
     public Result getBestResult() {
         Result result = null;
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c = db.query(ResultsTable.TABLE_NAME, new String[]{ResultsTable.PLAYER, "MAX(" + ResultsTable.POINTS + ")"}, null, null, null, null, null);
         if (c.getCount() > 0) {
             c.moveToFirst();
@@ -37,17 +37,19 @@ public class ResultsRepository {
         db.close();
         return result;
     }
-/*
+
     public ArrayList<Result> getTop25Results() {
         ArrayList<Result> results = new ArrayList<Result>();
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor c = db.query(ResultsTable.TABLE_NAME, new String[]{ResultsTable.PLAYER, ResultsTable.POINTS}, "", null, null, null, null);
-        if (c.getCount() > 0) {
-            c.moveToFirst();
-            result = new Result(c.getString(0), c.getInt(1));
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor c = db.query(ResultsTable.TABLE_NAME, new String[]{ResultsTable.PLAYER, ResultsTable.POINTS}, null, null, null, null, ResultsTable.POINTS + " DESC");
+
+        while (c.moveToNext() && c.getPosition() < 25) {
+            String player = c.getString(c.getColumnIndex(ResultsTable.PLAYER));
+            Integer points = c.getInt(c.getColumnIndex(ResultsTable.POINTS));
+            results.add(new Result(player, points));
         }
         c.close();
         db.close();
-        return result;
-    } */
+        return results;
+    }
 }

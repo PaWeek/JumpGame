@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".GameActivity" android:label="@string/play" />
-        <activity android:name=".HowToActivity" />
         <activity android:name=".RankActivity" android:label="@string/rank"></activity>
     </application>
 

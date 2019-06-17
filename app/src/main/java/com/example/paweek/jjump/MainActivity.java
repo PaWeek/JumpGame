@@ -22,14 +22,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnMenuRank:
                 goRank();
                 break;
-            case R.id.btnMenuHowPlay:
-
-                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-                alertDialog.setTitle("Warning");
-                alertDialog.setMessage("You are currently in a battle");
-                alertDialog.show();
-                //goHowPlay();
-                break;
         }
     }
 
@@ -40,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     void goRank() {
         Intent intent = new Intent(this, RankActivity.class);
-        startActivity(intent);
-    }
-
-    void goHowPlay() {
-        Intent intent = new Intent(this, HowToActivity.class);
         startActivity(intent);
     }
 }

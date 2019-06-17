@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:background="@color/colorBlack"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/listNickname"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="20dp"
+        android:text="PAAWEE"
+        android:textSize="26dp"
+        android:textColor="@color/colorWhiteText"
+        android:background="@color/colorBlack"
+        android:fontFamily="casual"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingLeft="40dp"
+        android:text="/"
+        android:textSize="26dp"
+        android:textColor="@color/colorWhiteText"
+        android:background="@color/colorBlack"
+        android:fontFamily="casual"/>
+
+    <TextView
+        android:id="@+id/listPoints"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingRight="40dp"
+        android:gravity="right"
+        android:text="45"
+        android:textSize="26dp"
+        android:textColor="@color/colorWhiteText"
+        android:background="@color/colorBlack"
+        android:fontFamily="casual"/>
+
+</LinearLayout>

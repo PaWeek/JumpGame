@@ -71,7 +71,8 @@ public class GameActivity extends AppCompatActivity implements Observer {
         final AlertDialog dialog = builder.create();
         final TextView lblResult = view.findViewById(R.id.lblResult);
         final EditText txtNickname = view.findViewById(R.id.txtNickname);
-        lblResult.setText(lblPoints.getText().toString() + " points ! " + lblResult.getText().toString());
+        Integer points = Integer.parseInt(lblPoints.getText().toString());
+        lblResult.setText(points.toString() + (points == 0 ? " point ! " : " points ! ") + lblResult.getText().toString());
         Button btnSaveNickname = view.findViewById(R.id.btnSaveNickname);
         btnSaveNickname.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +82,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
                     Integer points = Integer.parseInt(lblPoints.getText().toString());
                     resultsRepository.saveResult(new Result(nickName, points));
                     dialog.dismiss();
+                    game.restart();
                 }
             }
         });
