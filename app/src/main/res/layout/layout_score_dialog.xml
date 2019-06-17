@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:background="@color/colorBlack">
+
+    <TextView
+        android:id="@+id/lblResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Best Score ! "
+        android:textColor="@color/colorWhiteText"
+        android:fontFamily="casual"
+        android:gravity="center"
+        android:textSize="20dp"/>
+
+    <EditText
+        android:layout_marginTop="10dp"
+        android:id="@+id/txtNickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nickname"
+        android:outlineAmbientShadowColor="@color/colorWhiteText"
+        android:outlineSpotShadowColor="@color/colorWhiteText"
+        android:shadowColor="@color/colorWhiteText"
+        android:fontFamily="casual"
+        android:textColor="@color/colorWhiteText"
+        android:textColorHint="@color/colorWhiteText"
+        android:textSize="26dp"
+        android:maxLength="5"/>
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnSaveNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorWhiteText"
+        android:layout_gravity="center"
+        android:fontFamily="casual"
+        android:text="@string/save"/>
+
+</LinearLayout>

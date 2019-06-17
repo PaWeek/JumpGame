@@ -37,17 +37,17 @@ public class ResultsRepository {
         db.close();
         return result;
     }
-
-//    public ArrayList<Result> getTop25Results() {
-//        ArrayList<Result> results = new ArrayList<Result>();
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//        Cursor c = db.query(ResultsTable.TABLE_NAME, new String[]{ResultsTable.PLAYER, ResultsTable.POINTS}, null, null, null, null, null);
-///        if (c.getCount() > 0) {
-//            c.moveToFirst();
-//            result = new Result(c.getString(0), c.getInt(1));
-//        }
- //       c.close();
-  //      db.close();
-   //     return result;
-    //}
+/*
+    public ArrayList<Result> getTop25Results() {
+        ArrayList<Result> results = new ArrayList<Result>();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor c = db.query(ResultsTable.TABLE_NAME, new String[]{ResultsTable.PLAYER, ResultsTable.POINTS}, "", null, null, null, null);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            result = new Result(c.getString(0), c.getInt(1));
+        }
+        c.close();
+        db.close();
+        return result;
+    } */
 }

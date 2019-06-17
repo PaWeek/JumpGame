@@ -4,4 +4,6 @@
     <string name="rank">Rank</string>
     <string name="how_play">How Play</string>
     <string name="restart">restart</string>
+    <string name="nickname">nickname</string>
+    <string name="save">save</string>
 </resources>

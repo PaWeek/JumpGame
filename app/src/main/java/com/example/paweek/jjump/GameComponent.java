@@ -1,5 +1,5 @@
 package com.example.paweek.jjump;
-
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,22 +9,28 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-public class GameComponent extends View {
+import java.util.ArrayList;
+import java.util.List;
 
+public class GameComponent extends View implements com.example.paweek.jjump.Observable {
+
+    private Context context;
     public TextView txtPoints;
     private Paint paint;
     private Integer jumpHeight, jumpPosition, substaclePosition, points;
-    private Boolean goDown, goUp;
+    private Boolean goDown, goUp, notified;
     public Boolean play;
     private Thread jumpThread, substaclesThread;
+    private List<Observer> observers;
 
     public GameComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
+        observers = new ArrayList();
         points = 0;
-        jumpHeight = 600;
+        jumpHeight = 450;
         jumpPosition = 0;
         substaclePosition = 0;
-        goDown = goUp = play = false;
+        goDown = goUp = play = notified = false;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.WHITE);
         jumpThread = new Thread(new JumpThread(new Handler()));
@@ -37,7 +43,8 @@ public class GameComponent extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawLine(100, this.getHeight() - jumpPosition, 100, getHeight() - 200 - jumpPosition, paint);
+        canvas.drawCircle(300, this.getHeight() - 110 - jumpPosition, 100, paint);
+        //canvas.drawLine(100, this.getHeight() - jumpPosition, 100, getHeight() - 200 - jumpPosition, paint);
 
         canvas.drawLine(this.getWidth() - substaclePosition, this.getHeight(), this.getWidth() - substaclePosition, getHeight() - 250, paint);
     }
@@ -47,12 +54,13 @@ public class GameComponent extends View {
     }
 
     public void jump() {
+        if (!play) return;
         if (!goUp && !goDown)
             goUp = true;
     }
 
     public boolean isCrash() {
-        return ((this.getWidth() - substaclePosition) == 100 && (getHeight() - jumpPosition) >= this.getHeight() - 200);
+        return ((this.getWidth() - substaclePosition) == 400 && (getHeight() - jumpPosition) >= this.getHeight() - 200);
     }
 
     private void jumpLogic() {
@@ -105,10 +113,33 @@ public class GameComponent extends View {
 
     public void restart() {
         pauseGame();
+        goDown = goUp = notified = false;
         points = 0;
         txtPoints.setText(points.toString());
         substaclePosition = 1;
         jumpPosition = 0;
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unregisterObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(Object args) {
+        for(Observer observer : observers)
+            observer.update(this, args);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(Observer observer : observers)
+            observer.update(this, null);
     }
 
     class JumpThread implements Runnable {
@@ -158,7 +189,13 @@ public class GameComponent extends View {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            if (isCrash()) pauseGame();
+                            if (isCrash()) {
+                                pauseGame();
+                                if (!notified) {
+                                    notifyObservers();
+                                    notified = true;
+                                }
+                            }
                             substaclesLogic();
                             invalidate();
                         }

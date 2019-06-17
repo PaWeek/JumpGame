@@ -1,10 +1,10 @@
 package com.example.paweek.jjump;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +23,12 @@ public class MainActivity extends AppCompatActivity {
                 goRank();
                 break;
             case R.id.btnMenuHowPlay:
-                goHowPlay();
+
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setTitle("Warning");
+                alertDialog.setMessage("You are currently in a battle");
+                alertDialog.show();
+                //goHowPlay();
                 break;
         }
     }
