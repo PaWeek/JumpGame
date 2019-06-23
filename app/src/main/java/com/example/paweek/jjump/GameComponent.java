@@ -17,7 +17,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
     private Context context;
     public TextView txtPoints;
     private Paint paint;
-    private Integer jumpHeight, jumpPosition, substaclePosition, points;
+    private Integer jumpHeight, jumpPosition, substaclePosition, points, nanosSpeed;
     private Boolean goDown, goUp, notified;
     public Boolean play;
     private Thread jumpThread, substaclesThread;
@@ -26,8 +26,9 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
     public GameComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
         observers = new ArrayList();
+        nanosSpeed = 900000;
         points = 0;
-        jumpHeight = 450;
+        jumpHeight = 400;
         jumpPosition = 0;
         substaclePosition = 0;
         goDown = goUp = play = notified = false;
@@ -39,12 +40,17 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
         substaclesThread.start();
     }
 
+    private void changeSpeed() {
+        if (points % 2 == 0) {
+            nanosSpeed = nanosSpeed - 20000;
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawCircle(300, this.getHeight() - 110 - jumpPosition, 100, paint);
-        //canvas.drawLine(100, this.getHeight() - jumpPosition, 100, getHeight() - 200 - jumpPosition, paint);
+        canvas.drawCircle(300, this.getHeight() - 110 - jumpPosition, 70, paint);
 
         canvas.drawLine(this.getWidth() - substaclePosition, this.getHeight(), this.getWidth() - substaclePosition, getHeight() - 250, paint);
     }
@@ -91,15 +97,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
         if (substaclePosition == getWidth() - 1) {
             points++;
             txtPoints.setText(points.toString());
-        }
-    }
-
-    private void addPoints() {
-        for (int i = 1; i <= 10; i++) {
-            if ((((this.getWidth()/10)*i)/(this.getWidth()-substaclePosition))== 1) {
-                points++;
-                txtPoints.setText(points.toString());
-            }
+            changeSpeed();
         }
     }
 
@@ -154,7 +152,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(0,400000);
+                    Thread.sleep(0,800000);
 
                     handler.post(new Runnable() {
                         @Override
@@ -184,7 +182,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(0, nanosSpeed);
 
                     handler.post(new Runnable() {
                         @Override

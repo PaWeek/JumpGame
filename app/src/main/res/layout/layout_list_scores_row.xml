@@ -17,17 +17,6 @@
         android:fontFamily="casual"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingLeft="40dp"
-        android:text="/"
-        android:textSize="26dp"
-        android:textColor="@color/colorWhiteText"
-        android:background="@color/colorBlack"
-        android:fontFamily="casual"/>
-
-    <TextView
         android:id="@+id/listPoints"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

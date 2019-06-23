@@ -1,5 +1,6 @@
 package com.example.paweek.jjump;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AlertDialog;
@@ -65,6 +66,7 @@ public class GameActivity extends AppCompatActivity implements Observer {
     }
 
     private void showSaveScoreDialog() {
+        final Context context = this;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.layout_score_dialog, null);
         builder.setView(view);
@@ -78,11 +80,14 @@ public class GameActivity extends AppCompatActivity implements Observer {
             @Override
             public void onClick(View v) {
                 String nickName = txtNickname.getText().toString();
-                if (!nickName.isEmpty()) {
+                if (!nickName.trim().isEmpty()) {
                     Integer points = Integer.parseInt(lblPoints.getText().toString());
-                    resultsRepository.saveResult(new Result(nickName, points));
+                    resultsRepository.saveResult(new Result(nickName.trim(), points));
                     dialog.dismiss();
                     game.restart();
+                } else {
+                    Toast.makeText(context, "Name can't be empty!",
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });

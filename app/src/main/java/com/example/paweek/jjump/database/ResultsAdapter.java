@@ -41,7 +41,7 @@ public class ResultsAdapter extends ArrayAdapter<Result> {
         }
 
         holder.points.setText(results.get(position).getPoints().toString());
-        holder.nickName.setText(results.get(position).getPlayer());
+        holder.nickName.setText((position + 1) + ". " + results.get(position).getPlayer() + " :");
 
         return row;
     }
