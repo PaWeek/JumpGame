@@ -20,7 +20,7 @@ import static android.support.v7.app.AlertDialog.*;
 public class GameActivity extends AppCompatActivity implements Observer {
 
     private GameComponent game;
-    private TextView lblPoints;
+    private TextView lblPoints, lblBestPoints;
     private ResultsRepository resultsRepository;
 
     @Override
@@ -30,6 +30,12 @@ public class GameActivity extends AppCompatActivity implements Observer {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         resultsRepository = new ResultsRepository(this);
         lblPoints = findViewById(R.id.lblPoints);
+        lblBestPoints = findViewById(R.id.lblBestPoints);
+        Result bestResult = resultsRepository.getBestResult();
+        if (bestResult != null)
+            lblBestPoints.setText("Best: " + bestResult.getPoints().toString());
+        else
+            lblBestPoints.setText("Best: 0");
         game = findViewById(R.id.jumpGameComponent);
         game.addTxt(lblPoints);
         game.registerObserver(this);
@@ -61,8 +67,11 @@ public class GameActivity extends AppCompatActivity implements Observer {
     public void update(Observable observable, Object args) {
         Integer points = Integer.parseInt(lblPoints.getText().toString());
         Result result = resultsRepository.getBestResult();
-        if (result != null && points > result.getPoints())
+        if (result != null && points > result.getPoints()) {
             showSaveScoreDialog();
+            lblBestPoints.setText("Best: " + points.toString());
+        }
+        ((Button)findViewById(R.id.btnPausePlay)).setText("play");
     }
 
     private void showSaveScoreDialog() {

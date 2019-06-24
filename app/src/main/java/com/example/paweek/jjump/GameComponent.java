@@ -1,9 +1,14 @@
 package com.example.paweek.jjump;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
@@ -22,13 +27,15 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
     public Boolean play;
     private Thread jumpThread, substaclesThread;
     private List<Observer> observers;
+    private Bitmap treeBitmap;
+    private MediaPlayer jumpSound, crashSound;
 
     public GameComponent(Context context, AttributeSet attrs) {
         super(context, attrs);
         observers = new ArrayList();
         nanosSpeed = 900000;
         points = 0;
-        jumpHeight = 400;
+        jumpHeight = 450;
         jumpPosition = 0;
         substaclePosition = 0;
         goDown = goUp = play = notified = false;
@@ -36,6 +43,9 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
         paint.setColor(Color.WHITE);
         jumpThread = new Thread(new JumpThread(new Handler()));
         substaclesThread = new Thread(new RunThread(new Handler()));
+        treeBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.kaktus);
+        jumpSound = MediaPlayer.create(context, R.raw.jump);
+        crashSound = MediaPlayer.create(context, R.raw.crash);
         jumpThread.start();
         substaclesThread.start();
     }
@@ -50,9 +60,9 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawCircle(300, this.getHeight() - 110 - jumpPosition, 70, paint);
-
-        canvas.drawLine(this.getWidth() - substaclePosition, this.getHeight(), this.getWidth() - substaclePosition, getHeight() - 250, paint);
+        canvas.drawCircle(300, this.getHeight() - 130 - jumpPosition, 55, paint);
+        canvas.drawBitmap(treeBitmap, this.getWidth() - substaclePosition, getHeight() - 270, paint);
+        canvas.drawLine(0, getHeight() - 100, getWidth(), getHeight() - 100, paint);
     }
 
     public void addTxt(TextView txt) {
@@ -61,12 +71,15 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
 
     public void jump() {
         if (!play) return;
-        if (!goUp && !goDown)
+
+        if (!goUp && !goDown) {
+            jumpSound.start();
             goUp = true;
+        }
     }
 
     public boolean isCrash() {
-        return ((this.getWidth() - substaclePosition) == 400 && (getHeight() - jumpPosition) >= this.getHeight() - 200);
+        return (((this.getWidth() - substaclePosition) <= 345 && (this.getWidth() - substaclePosition) >= 190) && (getHeight() - jumpPosition) >= this.getHeight() - 180);
     }
 
     private void jumpLogic() {
@@ -89,7 +102,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
 
     private void substaclesLogic() {
         if (!play) return;
-        if (!substaclePosition.equals(getWidth()))
+        if (!substaclePosition.equals(getWidth() + 200))
             substaclePosition++;
         else
             substaclePosition = 1;
@@ -115,6 +128,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
         points = 0;
         txtPoints.setText(points.toString());
         substaclePosition = 1;
+        nanosSpeed = 900000;
         jumpPosition = 0;
     }
 
@@ -152,7 +166,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
         public void run() {
             while (true) {
                 try {
-                    Thread.sleep(0,800000);
+                    Thread.sleep(1);
 
                     handler.post(new Runnable() {
                         @Override
@@ -190,6 +204,7 @@ public class GameComponent extends View implements com.example.paweek.jjump.Obse
                             if (isCrash()) {
                                 pauseGame();
                                 if (!notified) {
+                                    crashSound.start();
                                     notifyObservers();
                                     notified = true;
                                 }
